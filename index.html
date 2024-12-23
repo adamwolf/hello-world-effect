@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelloWorldEffect Custom Effect Component Example</title>
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.7.1/dist/es-module-shims.js"></script>
+    <script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js",
+    "postprocessing": "https://cdn.jsdelivr.net/npm/postprocessing@6.36.4/build/index.js"
+  }
+}
+    </script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer-module.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer-effects/dist/model-viewer-effects.min.js"></script>
+    <script type="module" src="dist/hello-world-effect.es.js"></script>
+    <style>
+        .slider-container {
+            margin: 10px 0;
+        }
+        .slider-label {
+            display: inline-block;
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+<h1>hello-world-effect example</h1>
+<model-viewer autoplay ar camera-controls touch-action="pan-y" src="blender-export.glb" alt="A 3D model of a case for some electronic development boards.">
+    <effect-composer>
+        <hello-world-effect
+                red="1.0"
+                green="0"
+                blue="0"></hello-world-effect>
+    </effect-composer>
+</model-viewer>
+
+<div class="slider-container">
+    <label class="slider-label" for="red-slider">Red:</label>
+    <input type="range" id="red-slider" min="0" max="1" step="0.01" value="1.0">
+    <span id="red-value">1.0</span>
+</div>
+<div class="slider-container">
+    <label class="slider-label" for="green-slider">Green:</label>
+    <input type="range" id="green-slider" min="0" max="1" step="0.01" value="0">
+    <span id="green-value">0</span>
+</div>
+<div class="slider-container">
+    <label class="slider-label" for="blue-slider">Blue:</label>
+    <input type="range" id="blue-slider" min="0" max="1" step="0.01" value="0">
+    <span id="blue-value">0</span>
+</div>
+
+<p>hello-world-effect is a custom effect component for <a href="https://github.com/google/model-viewer/tree/master/packages/model-viewer-effects">model-viewer-effects</a>.</p>
+<p>See <a href="https://github.com/adamwolf/hello-world-effect">https://github.com/adamwolf/hello-world-effect</a> for details.</p>
+
+<script>
+    const redSlider = document.getElementById('red-slider');
+    const greenSlider = document.getElementById('green-slider');
+    const blueSlider = document.getElementById('blue-slider');
+    const redValue = document.getElementById('red-value');
+    const greenValue = document.getElementById('green-value');
+    const blueValue = document.getElementById('blue-value');
+    const helloWorldEffect = document.querySelector('hello-world-effect');
+
+    function updateEffect() {
+        helloWorldEffect.setAttribute('red', redSlider.value);
+        helloWorldEffect.setAttribute('green', greenSlider.value);
+        helloWorldEffect.setAttribute('blue', blueSlider.value);
+        redValue.textContent = redSlider.value;
+        greenValue.textContent = greenSlider.value;
+        blueValue.textContent = blueSlider.value;
+    }
+
+    redSlider.addEventListener('input', updateEffect);
+    greenSlider.addEventListener('input', updateEffect);
+    blueSlider.addEventListener('input', updateEffect);
+</script>
+</body>
+</html>
